@@ -1126,24 +1126,14 @@
       alert('Por favor introduce el código de sesión que te ha proporcionado tu técnico.'); 
       return; 
     }
-    // Crear formulario dinámico que envía el código al servidor ISL propio
-    const form = document.createElement('form');
-    form.method = 'GET';
-    form.action = 'https://soporte.itfarma.net/';
-    form.target = '_blank';
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'session_code';
-    input.value = codigo;
-    form.appendChild(input);
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
-    // Mostrar mensaje de descarga
+    // Redirigir al servidor ISL propio con el código en la URL
+    const url = 'https://soporte.itfarma.net/join/' + encodeURIComponent(codigo);
+    window.open(url, '_blank');
+    // Feedback visual
     const btn = document.querySelector('.btn-conectar');
-    const original = btn.textContent;
-    btn.textContent = '⏳ Conectando...';
-    setTimeout(() => { btn.textContent = original; }, 3000);
+    const original = btn.innerHTML;
+    btn.innerHTML = '⏳ Conectando...';
+    setTimeout(() => { btn.innerHTML = original; }, 3000);
   }
 
   // Smooth scroll nav
