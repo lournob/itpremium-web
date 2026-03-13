@@ -766,8 +766,8 @@
     <a href="#soporte" class="acceso-btn"><span class="ico">🖥️</span> Soporte Remoto</a>
     <a href="#incidencias" class="acceso-btn"><span class="ico">🎫</span> Portal de Incidencias</a>
     <a href="https://wa.me/34XXXXXXXXX" class="acceso-btn" target="_blank"><span class="ico">💬</span> WhatsApp Soporte</a>
-    <a href="tel:+34XXXXXXXXX" class="acceso-btn"><span class="ico">📞</span> Llamar Ahora</a>
-    <a href="mailto:info@itfarma.net" class="acceso-btn"><span class="ico">✉️</span> Enviar Email</a>
+    <a href="tel:+34910000000" class="acceso-btn"><span class="ico">📞</span> Llamar Ahora</a>
+    <a href="/cdn-cgi/l/email-protection#f39a9d959cb39a879592819e92dd9d9687" class="acceso-btn"><span class="ico">✉️</span> Enviar Email</a>
   </div>
 </div>
 
@@ -863,7 +863,7 @@
           <label>TU NOMBRE (opcional)</label>
           <input type="text" placeholder="Farmacia García">
         </div>
-        <button class="btn-conectar" onclick="alert('Conectando con servidor ISL...')">⚡ Conectar con soporte</button>
+        <button class="btn-conectar" onclick="conectarSoporte()">⚡ Conectar con soporte</button>
         <p style="margin-top:14px; font-size:0.75rem; color:var(--slate); text-align:center">
           Conexión segura y cifrada · Servidor propio ITFARMA
         </p>
@@ -1070,7 +1070,7 @@
   <div class="cta-actions">
     <a href="https://wa.me/34XXXXXXXXX" class="btn-wa" target="_blank">💬 WhatsApp directo</a>
     <a href="#soporte" class="btn-primary">⚡ Soporte remoto ya</a>
-    <a href="mailto:info@itfarma.net" class="btn-secondary">✉️ Enviar email</a>
+    <a href="/cdn-cgi/l/email-protection#eb82858d84ab829f8d8a99868ac5858e9f" class="btn-secondary">✉️ Enviar email</a>
   </div>
 </section>
 
@@ -1081,7 +1081,7 @@
       <a href="#" class="footer-logo">IT<span>FARMA</span></a>
       <p class="footer-desc">Soluciones informáticas y tecnológicas especializadas para farmacias. Madrid y área metropolitana.</p>
       <p class="footer-desc" style="margin-top:12px; font-size:0.78rem; color:rgba(143,163,184,0.5)">
-        IT Farma S.L. · Paseo de la Habana, 1 Planta 2B<br>28036 Madrid, España
+        IT Farma S.L. · Paseo de la Habana, 1 Planta 2B · 28036 Madrid
       </p>
     </div>
     <div class="footer-col">
@@ -1101,8 +1101,8 @@
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
-      <a href="tel:+34XXXXXXXXX">📞 +34 XXX XXX XXX</a>
-      <a href="mailto:info@itfarma.net">✉️ info@itfarma.net</a>
+      <a href="tel:+34910000000">📞 +34 910 000 000</a>
+      <a href="/cdn-cgi/l/email-protection#51383f373e1138253730233c307f3f3425">✉️ <span class="__cf_email__" data-cfemail="5f363139301f362b393e2d323e71313a2b">[email&#160;protected]</span></a>
       <a href="https://wa.me/34XXXXXXXXX" target="_blank">💬 WhatsApp</a>
       <a href="#">📍 Ver en mapa</a>
     </div>
@@ -1118,7 +1118,17 @@
    class="wa-float" target="_blank" title="Soporte por WhatsApp">💬</a>
 <div class="wa-tooltip">Soporte por WhatsApp →</div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Soporte ISL
+  function conectarSoporte() {
+    const codigo = document.querySelector('input[placeholder="Ej: 123-456-789"]').value.trim();
+    if (!codigo) { alert('Por favor introduce el código de sesión que te ha proporcionado tu técnico.'); return; }
+    const url = "https://soporte.itfarma.net/join?session_code=" + encodeURIComponent(codigo);
+    // Fallback: also try direct ISL protocol
+    const islUrl = "isllight://soporte.itfarma.net/?cmdline=--connect%20" + encodeURIComponent(codigo);
+    window.open(url, "_blank");
+  }
+
   // Smooth scroll nav
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
@@ -1146,16 +1156,4 @@
     entries.forEach(en => {
       if(en.isIntersecting){
         en.target.style.opacity = '1';
-        en.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, {threshold:0.1});
-  fadeEls.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    fadeObs.observe(el);
-  });
-</script>
-</body>
-</html>
+ 
