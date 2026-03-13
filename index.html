@@ -857,13 +857,15 @@
         <div class="form-sub">Introduce el código que te ha facilitado tu técnico</div>
         <div class="input-group">
           <label>CÓDIGO DE SESIÓN</label>
-          <input type="text" placeholder="Ej: 123-456-789" maxlength="15">
-        </div>
-        <div class="input-group">
-          <label>TU NOMBRE (opcional)</label>
-          <input type="text" placeholder="Farmacia García">
+          <input type="text" id="isl-code-input" placeholder="Ej: 123-456-789" maxlength="15">
         </div>
         <button class="btn-conectar" onclick="conectarSoporte()">⚡ Conectar con soporte</button>
+        <div style="margin-top:16px; text-align:center">
+          <p style="font-size:0.75rem; color:var(--slate); margin-bottom:10px">O accede directamente al portal de soporte:</p>
+          <a href="https://soporte.itfarma.net" target="_blank" class="btn-portal" style="display:inline-flex">
+            🔗 Abrir portal de soporte →
+          </a>
+        </div>
         <p style="margin-top:14px; font-size:0.75rem; color:var(--slate); text-align:center">
           Conexión segura y cifrada · Servidor propio ITFARMA
         </p>
@@ -1119,20 +1121,25 @@
 <div class="wa-tooltip">Soporte por WhatsApp →</div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Soporte ISL
+  // Soporte ISL - Opción C: formulario propio que abre ISL en nueva pestaña
   function conectarSoporte() {
-    const codigo = document.querySelector('input[placeholder="Ej: 123-456-789"]').value.trim();
-    if (!codigo) { 
-      alert('Por favor introduce el código de sesión que te ha proporcionado tu técnico.'); 
-      return; 
+    var codigo = document.getElementById('isl-code-input').value.replace(/\s|-/g, '').trim();
+    if (!codigo) {
+      alert('Por favor, introduce el código de sesión que te ha proporcionado tu técnico.');
+      return;
     }
-    // Usar enlace directo para evitar bloqueo de popups
-    const url = 'https://soporte.itfarma.net/join/' + encodeURIComponent(codigo);
-    const a = document.createElement('a');
-    a.href = url;
-    // Sin target _blank para evitar bloqueo - abre en la misma pestaña
-    a.click();
+    window.open('https://soporte.itfarma.net/join/' + codigo, '_blank');
   }
+
+  // Permitir conectar también pulsando Enter en el input
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('isl-code-input');
+    if (input) {
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') conectarSoporte();
+      });
+    }
+  });
 
   // Smooth scroll nav
   document.querySelectorAll('a[href^="#"]').forEach(a => {
