@@ -1126,14 +1126,12 @@
       alert('Por favor introduce el código de sesión que te ha proporcionado tu técnico.'); 
       return; 
     }
-    // Redirigir al servidor ISL propio con el código en la URL
+    // Usar enlace directo para evitar bloqueo de popups
     const url = 'https://soporte.itfarma.net/join/' + encodeURIComponent(codigo);
-    window.open(url, '_blank');
-    // Feedback visual
-    const btn = document.querySelector('.btn-conectar');
-    const original = btn.innerHTML;
-    btn.innerHTML = '⏳ Conectando...';
-    setTimeout(() => { btn.innerHTML = original; }, 3000);
+    const a = document.createElement('a');
+    a.href = url;
+    // Sin target _blank para evitar bloqueo - abre en la misma pestaña
+    a.click();
   }
 
   // Smooth scroll nav
