@@ -1122,11 +1122,28 @@
   // Soporte ISL
   function conectarSoporte() {
     const codigo = document.querySelector('input[placeholder="Ej: 123-456-789"]').value.trim();
-    if (!codigo) { alert('Por favor introduce el código de sesión que te ha proporcionado tu técnico.'); return; }
-    const url = "https://soporte.itfarma.net/join?session_code=" + encodeURIComponent(codigo);
-    // Fallback: also try direct ISL protocol
-    const islUrl = "isllight://soporte.itfarma.net/?cmdline=--connect%20" + encodeURIComponent(codigo);
-    window.open(url, "_blank");
+    if (!codigo) { 
+      alert('Por favor introduce el código de sesión que te ha proporcionado tu técnico.'); 
+      return; 
+    }
+    // Crear formulario dinámico que envía el código al servidor ISL propio
+    const form = document.createElement('form');
+    form.method = 'GET';
+    form.action = 'https://soporte.itfarma.net/';
+    form.target = '_blank';
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'session_code';
+    input.value = codigo;
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+    // Mostrar mensaje de descarga
+    const btn = document.querySelector('.btn-conectar');
+    const original = btn.textContent;
+    btn.textContent = '⏳ Conectando...';
+    setTimeout(() => { btn.textContent = original; }, 3000);
   }
 
   // Smooth scroll nav
