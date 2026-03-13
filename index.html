@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITFARMA · Soluciones IT para Farmacias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #00C48C;
+    --green-dark: #00A876;
+    --green-glow: rgba(0,196,140,0.15);
+    --navy: #0B1A2C;
+    --navy-mid: #112236;
+    --navy-light: #1A3350;
+    --slate: #8FA3B8;
+    --white: #F0F6FF;
+    --accent: #5BE3C1;
+    --warn: #FFB347;
+    --radius: 14px;
+    --card-bg: rgba(17,34,54,0.7);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 18px 6%;
+    background: rgba(11,26,44,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0,196,140,0.12);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--green); }
+
+  .nav-links {
+    display:flex; gap:32px; list-style:none;
+  }
+  .nav-links a {
+    text-decoration:none; color: var(--slate);
+    font-size: 0.88rem; font-weight:500; letter-spacing:0.3px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-actions { display:flex; gap:12px; align-items:center; }
+
+  .btn-nav-soporte {
+    background: var(--green);
+    color: var(--navy);
+    padding: 9px 20px; border-radius: 8px;
+    font-size: 0.85rem; font-weight:700; text-decoration:none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-nav-soporte:hover { background: var(--accent); transform:translateY(-1px); }
+
+  .btn-nav-ghost {
+    border: 1px solid rgba(0,196,140,0.4);
+    color: var(--green); padding: 9px 18px; border-radius:8px;
+    font-size:0.85rem; font-weight:600; text-decoration:none;
+    transition: all 0.2s;
+  }
+  .btn-nav-ghost:hover { background: var(--green-glow); border-color: var(--green); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display:flex; align-items:center;
+    padding: 120px 6% 80px;
+    position:relative; overflow:hidden;
+  }
+
+  .hero-bg {
+    position:absolute; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 70% 60% at 70% 40%, rgba(0,196,140,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 10% 80%, rgba(91,227,193,0.05) 0%, transparent 50%),
+      linear-gradient(160deg, #0B1A2C 0%, #0D2035 100%);
+  }
+
+  .hero-grid {
+    position:absolute; inset:0; z-index:0; opacity:0.06;
+    background-image:
+      linear-gradient(rgba(0,196,140,0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,196,140,0.5) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content { position:relative; z-index:1; max-width: 620px; }
+
+  .hero-badge {
+    display: inline-flex; align-items:center; gap:8px;
+    background: rgba(0,196,140,0.1);
+    border: 1px solid rgba(0,196,140,0.3);
+    border-radius: 50px; padding: 6px 16px;
+    font-size: 0.78rem; font-weight:600; color: var(--green);
+    margin-bottom: 24px; letter-spacing:0.8px; text-transform:uppercase;
+  }
+  .hero-badge::before {
+    content:''; width:7px; height:7px; border-radius:50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.5; transform:scale(0.7); }
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 800; line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+  .hero-title em { color: var(--green); font-style:normal; }
+
+  .hero-sub {
+    font-size: 1.1rem; color: var(--slate); line-height: 1.7;
+    max-width: 520px; margin-bottom: 36px;
+  }
+
+  .hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
+
+  .btn-primary {
+    background: var(--green);
+    color: var(--navy); padding: 14px 28px;
+    border-radius: 10px; font-weight:700;
+    font-size: 0.95rem; text-decoration:none; display:inline-flex;
+    align-items:center; gap:8px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 24px rgba(0,196,140,0.3);
+  }
+  .btn-primary:hover { background: var(--accent); transform:translateY(-2px); box-shadow: 0 8px 32px rgba(0,196,140,0.4); }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white); padding: 14px 28px;
+    border-radius: 10px; font-weight:600;
+    font-size: 0.95rem; text-decoration:none; display:inline-flex;
+    align-items:center; gap:8px;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+
+  .hero-stats {
+    display:flex; gap:40px; margin-top:52px;
+    padding-top: 36px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .stat-item { text-align:left; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem; font-weight:800; color: var(--white);
+    display:block; line-height:1;
+  }
+  .stat-num span { color: var(--green); }
+  .stat-label { font-size:0.78rem; color: var(--slate); margin-top:4px; letter-spacing:0.3px; }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    position:absolute; right:4%; top:50%; transform:translateY(-50%);
+    width: 500px; z-index:1;
+  }
+
+  .dashboard-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(0,196,140,0.15);
+    border-radius: 18px;
+    backdrop-filter: blur(20px);
+    padding: 24px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,196,140,0.05);
+  }
+
+  .card-header {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:20px;
+  }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.78rem; font-weight:700;
+    color: var(--slate); text-transform:uppercase; letter-spacing:1px;
+  }
+  .status-chip {
+    font-size:0.72rem; font-weight:600; padding: 4px 10px;
+    border-radius:50px;
+  }
+  .status-ok { background:rgba(0,196,140,0.15); color: var(--green); }
+  .status-warn { background:rgba(255,179,71,0.15); color: var(--warn); }
+  .status-info { background:rgba(91,227,193,0.1); color: var(--accent); }
+
+  .ticket-list { display:flex; flex-direction:column; gap:10px; }
+  .ticket-row {
+    display:flex; align-items:center; gap:12px;
+    padding:12px 14px;
+    background: rgba(255,255,255,0.03);
+    border-radius:10px;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .ticket-icon {
+    width:34px; height:34px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.95rem; flex-shrink:0;
+  }
+  .t-green { background:rgba(0,196,140,0.12); }
+  .t-warn { background:rgba(255,179,71,0.12); }
+  .t-blue { background:rgba(91,227,193,0.1); }
+  .ticket-info { flex:1; }
+  .ticket-name { font-size:0.82rem; font-weight:600; color: var(--white); }
+  .ticket-meta { font-size:0.72rem; color: var(--slate); margin-top:2px; }
+  .ticket-time { font-size:0.72rem; color: var(--slate); }
+
+  .mini-chart { margin-top:20px; }
+  .chart-label { font-size:0.72rem; color: var(--slate); margin-bottom:8px; }
+  .bars { display:flex; gap:6px; align-items:flex-end; height:60px; }
+  .bar {
+    flex:1; border-radius:4px 4px 0 0;
+    background: linear-gradient(180deg, var(--green), rgba(0,196,140,0.3));
+    transition: height 0.5s ease;
+    min-height:8px;
+  }
+  .bar.dim { background: rgba(255,255,255,0.08); }
+
+  .float-card {
+    position:absolute;
+    background: var(--card-bg);
+    border: 1px solid rgba(0,196,140,0.2);
+    border-radius:12px;
+    padding:12px 16px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    white-space: nowrap;
+  }
+  .float-1 { bottom:-30px; left:-40px; animation: float1 4s ease-in-out infinite; }
+  .float-2 { top:-20px; right:-20px; animation: float2 3.5s ease-in-out infinite; }
+
+  @keyframes float1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+  .float-label { font-size:0.7rem; color: var(--slate); }
+  .float-val { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:800; color:var(--white); }
+  .float-val span { color: var(--green); }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 90px 6%; }
+
+  .section-label {
+    font-size:0.75rem; font-weight:700; letter-spacing:1.5px;
+    text-transform:uppercase; color: var(--green); margin-bottom:12px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight:800; line-height:1.15; letter-spacing:-0.5px;
+    margin-bottom:16px;
+  }
+  .section-sub { color: var(--slate); font-size:1rem; line-height:1.7; max-width:540px; }
+
+  /* ─── ACCESOS RAPIDOS ─── */
+  #accesos {
+    background: rgba(0,196,140,0.04);
+    border-top: 1px solid rgba(0,196,140,0.1);
+    border-bottom: 1px solid rgba(0,196,140,0.1);
+    padding: 32px 6%;
+  }
+  .accesos-grid {
+    display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
+  }
+  .acceso-btn {
+    display:flex; align-items:center; gap:10px;
+    background: var(--card-bg); border: 1px solid rgba(255,255,255,0.08);
+    border-radius:12px; padding:14px 22px;
+    text-decoration:none; color: var(--white);
+    font-size:0.88rem; font-weight:600;
+    transition: all 0.2s;
+    backdrop-filter:blur(10px);
+  }
+  .acceso-btn:hover { border-color: var(--green); background: rgba(0,196,140,0.08); transform:translateY(-2px); }
+  .acceso-btn .ico { font-size:1.2rem; }
+
+  /* ─── SERVICIOS ─── */
+  #servicios { background: var(--navy); }
+  .servicios-grid {
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;
+    margin-top:48px;
+  }
+  .servicio-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 30px;
+    transition: all 0.3s;
+    position:relative; overflow:hidden;
+    backdrop-filter:blur(10px);
+  }
+  .servicio-card::before {
+    content:''; position:absolute;
+    top:0; left:0; right:0; height:3px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    opacity:0; transition:opacity 0.3s;
+  }
+  .servicio-card:hover { border-color: rgba(0,196,140,0.25); transform:translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+  .servicio-card:hover::before { opacity:1; }
+
+  .card-icon {
+    width:50px; height:50px; border-radius:12px;
+    background: rgba(0,196,140,0.1);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.4rem; margin-bottom:18px;
+    border: 1px solid rgba(0,196,140,0.2);
+  }
+  .card-name {
+    font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700;
+    margin-bottom:10px;
+  }
+  .card-desc { font-size:0.85rem; color: var(--slate); line-height:1.65; }
+
+  .card-tag {
+    display:inline-block; margin-top:16px;
+    font-size:0.72rem; font-weight:700; letter-spacing:0.5px;
+    color: var(--green); background:rgba(0,196,140,0.1);
+    padding:4px 10px; border-radius:50px;
+    border:1px solid rgba(0,196,140,0.2);
+  }
+
+  /* ─── SOPORTE REMOTO ─── */
+  #soporte {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, #0D2035 100%);
+    border-top: 1px solid rgba(0,196,140,0.1);
+  }
+  .soporte-layout {
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  }
+  .soporte-form-box {
+    background: var(--card-bg);
+    border: 1px solid rgba(0,196,140,0.2);
+    border-radius:18px; padding:36px;
+    backdrop-filter:blur(16px);
+  }
+  .form-title {
+    font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:800;
+    margin-bottom:8px;
+  }
+  .form-sub { font-size:0.85rem; color:var(--slate); margin-bottom:28px; }
+
+  .input-group { margin-bottom:16px; }
+  .input-group label { display:block; font-size:0.78rem; font-weight:600; color:var(--slate); margin-bottom:6px; letter-spacing:0.3px; }
+  .input-group input {
+    width:100%; padding:12px 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius:9px; color: var(--white);
+    font-size:0.9rem; font-family:'DM Sans',sans-serif;
+    transition: border-color 0.2s;
+    outline:none;
+  }
+  .input-group input:focus { border-color: var(--green); background: rgba(0,196,140,0.05); }
+  .input-group input::placeholder { color: rgba(143,163,184,0.5); }
+
+  .btn-conectar {
+    width:100%; padding:14px;
+    background: var(--green); color: var(--navy);
+    border:none; border-radius:10px;
+    font-family:'Syne',sans-serif; font-size:1rem; font-weight:800;
+    cursor:pointer; transition:all 0.2s;
+    letter-spacing:0.3px;
+  }
+  .btn-conectar:hover { background: var(--accent); transform:translateY(-1px); box-shadow:0 6px 24px rgba(0,196,140,0.4); }
+
+  .steps { display:flex; flex-direction:column; gap:20px; }
+  .step {
+    display:flex; gap:16px; align-items:flex-start;
+  }
+  .step-num {
+    width:34px; height:34px; border-radius:50%;
+    background: rgba(0,196,140,0.12);
+    border: 1px solid rgba(0,196,140,0.3);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Syne',sans-serif; font-weight:800; font-size:0.85rem;
+    color: var(--green); flex-shrink:0;
+  }
+  .step-text h4 { font-size:0.95rem; font-weight:700; margin-bottom:4px; }
+  .step-text p { font-size:0.83rem; color:var(--slate); line-height:1.6; }
+
+  /* ─── PORTAL INCIDENCIAS ─── */
+  #incidencias { background: var(--navy); }
+  .incidencias-layout {
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+    margin-top:48px;
+  }
+  .portal-preview {
+    background: var(--card-bg);
+    border:1px solid rgba(0,196,140,0.15);
+    border-radius:18px; padding:24px;
+    backdrop-filter:blur(16px);
+  }
+  .portal-header {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:20px;
+    padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .portal-header h3 { font-family:'Syne',sans-serif; font-size:1rem; font-weight:800; }
+  .badge-count {
+    background:var(--green); color:var(--navy);
+    width:24px; height:24px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.75rem; font-weight:800;
+  }
+  .incidencia-row {
+    display:flex; gap:12px; align-items:center;
+    padding:12px; border-radius:10px;
+    background:rgba(255,255,255,0.025);
+    margin-bottom:8px;
+    border-left:3px solid transparent;
+    transition:all 0.2s;
+  }
+  .incidencia-row:hover { background:rgba(0,196,140,0.06); border-left-color:var(--green); }
+  .inc-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+  .dot-red { background:#FF6B6B; box-shadow:0 0 6px rgba(255,107,107,0.6); }
+  .dot-yellow { background:var(--warn); box-shadow:0 0 6px rgba(255,179,71,0.5); }
+  .dot-green { background:var(--green); box-shadow:0 0 6px rgba(0,196,140,0.5); }
+  .inc-info { flex:1; }
+  .inc-title { font-size:0.83rem; font-weight:600; }
+  .inc-meta { font-size:0.72rem; color:var(--slate); margin-top:2px; }
+  .inc-status {
+    font-size:0.7rem; font-weight:700; padding:3px 9px;
+    border-radius:50px;
+  }
+  .s-abierto { background:rgba(255,107,107,0.12); color:#FF6B6B; }
+  .s-proceso { background:rgba(255,179,71,0.12); color:var(--warn); }
+  .s-resuelto { background:rgba(0,196,140,0.12); color:var(--green); }
+
+  .portal-footer {
+    margin-top:16px; text-align:center;
+  }
+  .btn-portal {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:11px 22px; border-radius:9px;
+    background: rgba(0,196,140,0.1);
+    border:1px solid rgba(0,196,140,0.3);
+    color:var(--green); font-weight:700; font-size:0.85rem;
+    text-decoration:none; transition:all 0.2s;
+  }
+  .btn-portal:hover { background: var(--green); color:var(--navy); }
+
+  .features-list { display:flex; flex-direction:column; gap:16px; }
+  .feature-item {
+    display:flex; gap:14px; align-items:flex-start;
+  }
+  .feature-icon {
+    width:40px; height:40px; border-radius:10px;
+    background:rgba(0,196,140,0.1);
+    border:1px solid rgba(0,196,140,0.2);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1rem; flex-shrink:0;
+  }
+  .feature-text h4 { font-size:0.95rem; font-weight:700; margin-bottom:4px; }
+  .feature-text p { font-size:0.82rem; color:var(--slate); line-height:1.6; }
+
+  /* ─── WHATSAPP ─── */
+  #whatsapp {
+    background: linear-gradient(135deg, #0D2035 0%, var(--navy) 100%);
+    border-top:1px solid rgba(0,196,140,0.08);
+  }
+  .wa-layout {
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  }
+  .wa-phone {
+    background: #1C2A3A;
+    border-radius:30px; padding:20px;
+    max-width:280px; margin:0 auto;
+    box-shadow:0 30px 60px rgba(0,0,0,0.5);
+    border:1px solid rgba(255,255,255,0.08);
+  }
+  .wa-bar {
+    background:#1A3350; border-radius:16px; padding:12px 16px;
+    display:flex; align-items:center; gap:10px; margin-bottom:16px;
+  }
+  .wa-avatar {
+    width:36px; height:36px; border-radius:50%;
+    background:var(--green);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1rem; font-weight:800; color:var(--navy);
+    font-family:'Syne',sans-serif;
+  }
+  .wa-name { font-size:0.85rem; font-weight:700; }
+  .wa-active { font-size:0.7rem; color:var(--green); }
+
+  .wa-messages { display:flex; flex-direction:column; gap:10px; }
+  .msg {
+    padding:10px 14px; border-radius:12px;
+    font-size:0.78rem; line-height:1.5; max-width:90%;
+  }
+  .msg-in { background:#1E3447; border-radius:0 12px 12px 12px; align-self:flex-start; }
+  .msg-out { background:rgba(0,196,140,0.2); border-radius:12px 12px 0 12px; align-self:flex-end; color:var(--accent); }
+  .msg-time { font-size:0.65rem; color:var(--slate); margin-top:4px; text-align:right; }
+
+  .wa-input {
+    background:#1A3350; border-radius:10px; padding:10px 14px;
+    display:flex; align-items:center; gap:8px; margin-top:14px;
+    font-size:0.75rem; color:var(--slate);
+  }
+
+  /* ─── NOSOTROS ─── */
+  #nosotros {
+    background: var(--navy-mid);
+    border-top:1px solid rgba(255,255,255,0.05);
+  }
+  .nosotros-layout {
+    display:grid; grid-template-columns:1fr 1fr; gap:60px;
+    align-items:center;
+  }
+  .valores-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px;
+  }
+  .valor-card {
+    background: rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:12px; padding:20px;
+    transition:all 0.2s;
+  }
+  .valor-card:hover { border-color:rgba(0,196,140,0.25); }
+  .valor-ico { font-size:1.4rem; margin-bottom:8px; }
+  .valor-title { font-family:'Syne',sans-serif; font-size:0.9rem; font-weight:700; margin-bottom:4px; }
+  .valor-desc { font-size:0.78rem; color:var(--slate); line-height:1.6; }
+
+  /* ─── CTA ─── */
+  #cta {
+    text-align:center;
+    background: linear-gradient(135deg, rgba(0,196,140,0.08) 0%, rgba(0,168,118,0.04) 100%);
+    border-top:1px solid rgba(0,196,140,0.15);
+    border-bottom:1px solid rgba(0,196,140,0.1);
+  }
+  .cta-title {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(2rem,4vw,3rem); font-weight:800;
+    line-height:1.1; letter-spacing:-0.5px; margin-bottom:16px;
+  }
+  .cta-sub { color:var(--slate); font-size:1rem; margin-bottom:36px; }
+  .cta-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  .btn-wa {
+    display:inline-flex; align-items:center; gap:10px;
+    background:#25D366; color:#fff;
+    padding:14px 28px; border-radius:10px;
+    font-weight:700; font-size:0.95rem; text-decoration:none;
+    transition:all 0.2s;
+    box-shadow:0 4px 20px rgba(37,211,102,0.3);
+  }
+  .btn-wa:hover { background:#1DB954; transform:translateY(-2px); box-shadow:0 8px 30px rgba(37,211,102,0.4); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #081524;
+    padding:50px 6% 30px;
+    border-top:1px solid rgba(255,255,255,0.06);
+  }
+  .footer-top {
+    display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:40px;
+    margin-bottom:40px;
+  }
+  .footer-logo {
+    font-family:'Syne',sans-serif; font-weight:800; font-size:1.3rem;
+    color:var(--white); margin-bottom:12px;
+    display:block; text-decoration:none;
+  }
+  .footer-logo span { color:var(--green); }
+  .footer-desc { font-size:0.82rem; color:var(--slate); line-height:1.7; }
+  .footer-col h4 {
+    font-family:'Syne',sans-serif; font-size:0.78rem; font-weight:700;
+    letter-spacing:1.2px; text-transform:uppercase;
+    color:var(--slate); margin-bottom:16px;
+  }
+  .footer-col a {
+    display:block; font-size:0.83rem; color:rgba(143,163,184,0.7);
+    text-decoration:none; margin-bottom:8px; transition:color 0.2s;
+  }
+  .footer-col a:hover { color:var(--white); }
+  .footer-bottom {
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:24px; border-top:1px solid rgba(255,255,255,0.06);
+    font-size:0.78rem; color:var(--slate);
+  }
+  .footer-cif { font-size:0.72rem; color:rgba(143,163,184,0.4); }
+
+  /* ─── WHATSAPP FLOAT ─── */
+  .wa-float {
+    position:fixed; bottom:28px; right:28px; z-index:999;
+    width:58px; height:58px; border-radius:50%;
+    background:#25D366;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.6rem; text-decoration:none;
+    box-shadow:0 4px 20px rgba(37,211,102,0.5);
+    transition:all 0.2s;
+    animation:wa-bounce 3s ease-in-out infinite;
+  }
+  .wa-float:hover { transform:scale(1.1); box-shadow:0 8px 30px rgba(37,211,102,0.6); }
+  @keyframes wa-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+  .wa-tooltip {
+    position:fixed; bottom:38px; right:96px; z-index:998;
+    background:var(--card-bg); backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:10px; padding:8px 14px;
+    font-size:0.8rem; font-weight:600;
+    white-space:nowrap; pointer-events:none;
+    opacity:0; transform:translateX(10px);
+    transition:all 0.3s;
+  }
+  .wa-float:hover + .wa-tooltip { opacity:1; transform:translateX(0); }
+
+  /* ─── SEPARADOR ─── */
+  .divider {
+    height:1px; background:linear-gradient(90deg, transparent, rgba(0,196,140,0.2), transparent);
+    margin: 0 6%;
+  }
+
+  /* ─── MOBILE ─── */
+  @media(max-width:900px) {
+    .hero-visual { display:none; }
+    .servicios-grid { grid-template-columns:1fr 1fr; }
+    .soporte-layout, .incidencias-layout, .wa-layout, .nosotros-layout { grid-template-columns:1fr; }
+    .footer-top { grid-template-columns:1fr 1fr; }
+    nav .nav-links { display:none; }
+    .hero-stats { gap:24px; }
+  }
+  @media(max-width:600px) {
+    .servicios-grid { grid-template-columns:1fr; }
+    .valores-grid { grid-template-columns:1fr; }
+    .footer-top { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">IT<span>FARMA</span></a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#soporte">Soporte</a></li>
+    <li><a href="#incidencias">Incidencias</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#incidencias" class="btn-nav-ghost">Portal Cliente</a>
+    <a href="#soporte" class="btn-nav-soporte">⚡ Soporte Remoto</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Especialistas en Farmacia</div>
+    <h1 class="hero-title">
+      IT para farmacias<br>que <em>nunca para</em>
+    </h1>
+    <p class="hero-sub">
+      Soporte técnico especializado, gestión de incidencias y soluciones digitales para farmacias que confían en la tecnología para trabajar mejor.
+    </p>
+    <div class="hero-actions">
+      <a href="#soporte" class="btn-primary">⚡ Conectar soporte</a>
+      <a href="#incidencias" class="btn-secondary">🎫 Abrir incidencia</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">200<span>+</span></span>
+        <div class="stat-label">Farmacias atendidas</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">15<span>min</span></span>
+        <div class="stat-label">Tiempo respuesta</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">10<span>+</span></span>
+        <div class="stat-label">Años de experiencia</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD PREVIEW -->
+  <div class="hero-visual">
+    <div style="position:relative">
+      <div class="dashboard-card">
+        <div class="card-header">
+          <span class="card-title">Incidencias activas</span>
+          <span class="status-chip status-ok">Sistema operativo</span>
+        </div>
+        <div class="ticket-list">
+          <div class="ticket-row">
+            <div class="ticket-icon t-warn">⚠️</div>
+            <div class="ticket-info">
+              <div class="ticket-name">Actualización Farmatic</div>
+              <div class="ticket-meta">Farmacia Central · Madrid</div>
+            </div>
+            <span class="status-chip status-warn" style="font-size:0.68rem">En proceso</span>
+          </div>
+          <div class="ticket-row">
+            <div class="ticket-icon t-green">✅</div>
+            <div class="ticket-info">
+              <div class="ticket-name">Error impresora tickets</div>
+              <div class="ticket-meta">Farmacia López · Alcalá</div>
+            </div>
+            <span class="status-chip status-ok" style="font-size:0.68rem">Resuelto</span>
+          </div>
+          <div class="ticket-row">
+            <div class="ticket-icon t-blue">🔒</div>
+            <div class="ticket-info">
+              <div class="ticket-name">Revisión firewall</div>
+              <div class="ticket-meta">Farmacia Norte · Madrid</div>
+            </div>
+            <span class="status-chip status-info" style="font-size:0.68rem">Programado</span>
+          </div>
+        </div>
+        <div class="mini-chart">
+          <div class="chart-label">Incidencias resueltas esta semana</div>
+          <div class="bars">
+            <div class="bar" style="height:30%"></div>
+            <div class="bar" style="height:55%"></div>
+            <div class="bar" style="height:40%"></div>
+            <div class="bar" style="height:75%"></div>
+            <div class="bar" style="height:60%"></div>
+            <div class="bar" style="height:90%"></div>
+            <div class="bar dim" style="height:20%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="float-card float-1">
+        <div class="float-label">Tiempo respuesta</div>
+        <div class="float-val"><span>12</span> min</div>
+      </div>
+      <div class="float-card float-2">
+        <div class="float-label">Satisfacción</div>
+        <div class="float-val"><span>98</span>%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESOS RÁPIDOS -->
+<div id="accesos">
+  <div class="accesos-grid">
+    <a href="#soporte" class="acceso-btn"><span class="ico">🖥️</span> Soporte Remoto</a>
+    <a href="#incidencias" class="acceso-btn"><span class="ico">🎫</span> Portal de Incidencias</a>
+    <a href="https://wa.me/34XXXXXXXXX" class="acceso-btn" target="_blank"><span class="ico">💬</span> WhatsApp Soporte</a>
+    <a href="tel:+34XXXXXXXXX" class="acceso-btn"><span class="ico">📞</span> Llamar Ahora</a>
+    <a href="mailto:info@itfarma.net" class="acceso-btn"><span class="ico">✉️</span> Enviar Email</a>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div>
+    <div class="section-label">Lo que hacemos</div>
+    <h2 class="section-title">Soluciones completas<br>para tu farmacia</h2>
+    <p class="section-sub">Somos el partner tecnológico de referencia para farmacias en Madrid. Del software al hardware, del soporte al asesoramiento.</p>
+  </div>
+  <div class="servicios-grid">
+    <div class="servicio-card">
+      <div class="card-icon">🖥️</div>
+      <div class="card-name">Soporte Técnico Remoto</div>
+      <div class="card-desc">Conexión inmediata para resolver cualquier incidencia sin desplazamiento. Nuestro equipo te asiste en minutos desde cualquier dispositivo.</div>
+      <span class="card-tag">⚡ Respuesta &lt;15 min</span>
+    </div>
+    <div class="servicio-card">
+      <div class="card-icon">💊</div>
+      <div class="card-name">Soporte Farmatic</div>
+      <div class="card-desc">Especialistas certificados en el sistema Farmatic. Configuración, actualizaciones, formación y resolución de errores del software de gestión farmacéutica.</div>
+      <span class="card-tag">Certificados Farmatic</span>
+    </div>
+    <div class="servicio-card">
+      <div class="card-icon">🔒</div>
+      <div class="card-name">Ciberseguridad</div>
+      <div class="card-desc">Firewalls, backups automáticos, protección ante ransomware y gestión de accesos. Tu farmacia y tus datos, siempre protegidos.</div>
+      <span class="card-tag">Sophos XGS</span>
+    </div>
+    <div class="servicio-card">
+      <div class="card-icon">🌐</div>
+      <div class="card-name">Redes e Infraestructura</div>
+      <div class="card-desc">Diseño, instalación y mantenimiento de redes corporativas. Cobertura WiFi óptima, segmentación de red y conectividad garantizada.</div>
+      <span class="card-tag">Instalación y mantenimiento</span>
+    </div>
+    <div class="servicio-card">
+      <div class="card-icon">💰</div>
+      <div class="card-name">Cashdro · Cajón Inteligente</div>
+      <div class="card-desc">Implantación y soporte del sistema de gestión de efectivo Cashdro. Reduce errores, agiliza el cobro y automatiza el arqueo de caja.</div>
+      <span class="card-tag">Partner oficial</span>
+    </div>
+    <div class="servicio-card">
+      <div class="card-icon">🔖</div>
+      <div class="card-name">Kiosco de Precios</div>
+      <div class="card-desc">Solución propia de consulta de precios con lector de códigos de barras integrado con Farmatic. Instalado directamente en tu farmacia.</div>
+      <span class="card-tag">Desarrollo propio</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOPORTE REMOTO -->
+<section id="soporte">
+  <div class="soporte-layout">
+    <div>
+      <div class="section-label">Soporte remoto</div>
+      <h2 class="section-title">Conexión directa<br>en segundos</h2>
+      <p class="section-sub">Cuando algo falla, no hay tiempo que perder. Introduce el código que te proporcionamos y estaremos en tu equipo en instantes.</p>
+      <div class="steps" style="margin-top:32px">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <h4>Llama o escríbenos</h4>
+            <p>Contacta por teléfono, WhatsApp o abre una incidencia en el portal. Te generamos un código de sesión.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <h4>Introduce el código</h4>
+            <p>Escribe el código de sesión en el formulario y pulsa conectar. Se descargará el cliente de soporte.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <h4>Listo, estamos dentro</h4>
+            <p>Nuestro técnico accede a tu equipo y resuelve la incidencia mientras tú observas en tiempo real.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="soporte-form-box">
+        <div class="form-title">🖥️ Iniciar sesión de soporte</div>
+        <div class="form-sub">Introduce el código que te ha facilitado tu técnico</div>
+        <div class="input-group">
+          <label>CÓDIGO DE SESIÓN</label>
+          <input type="text" placeholder="Ej: 123-456-789" maxlength="15">
+        </div>
+        <div class="input-group">
+          <label>TU NOMBRE (opcional)</label>
+          <input type="text" placeholder="Farmacia García">
+        </div>
+        <button class="btn-conectar" onclick="alert('Conectando con servidor ISL...')">⚡ Conectar con soporte</button>
+        <p style="margin-top:14px; font-size:0.75rem; color:var(--slate); text-align:center">
+          Conexión segura y cifrada · Servidor propio ITFARMA
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PORTAL INCIDENCIAS -->
+<section id="incidencias">
+  <div class="section-label">Portal del cliente</div>
+  <h2 class="section-title">Gestiona tus incidencias<br>desde cualquier lugar</h2>
+  <div class="incidencias-layout">
+    <div class="portal-preview">
+      <div class="portal-header">
+        <h3>Mis Incidencias</h3>
+        <div class="badge-count">3</div>
+      </div>
+      <div class="incidencia-row">
+        <div class="inc-dot dot-red"></div>
+        <div class="inc-info">
+          <div class="inc-title">Error al facturar recetas electrónicas</div>
+          <div class="inc-meta">Abierto hace 20 min · Prioridad alta</div>
+        </div>
+        <span class="inc-status s-abierto">Abierto</span>
+      </div>
+      <div class="incidencia-row">
+        <div class="inc-dot dot-yellow"></div>
+        <div class="inc-info">
+          <div class="inc-title">Actualización pendiente Farmatic v.24</div>
+          <div class="inc-meta">En proceso · Técnico asignado: Javier</div>
+        </div>
+        <span class="inc-status s-proceso">En proceso</span>
+      </div>
+      <div class="incidencia-row">
+        <div class="inc-dot dot-green"></div>
+        <div class="inc-info">
+          <div class="inc-title">Configuración nueva impresora</div>
+          <div class="inc-meta">Resuelto ayer · Duración: 45 min</div>
+        </div>
+        <span class="inc-status s-resuelto">Resuelto</span>
+      </div>
+      <div class="portal-footer">
+        <a href="#" class="btn-portal">📋 Abrir nueva incidencia →</a>
+      </div>
+    </div>
+    <div class="features-list">
+      <div class="feature-item">
+        <div class="feature-icon">📋</div>
+        <div class="feature-text">
+          <h4>Abre incidencias 24/7</h4>
+          <p>Describe el problema en cualquier momento. El sistema prioriza y asigna automáticamente al técnico adecuado.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔔</div>
+        <div class="feature-text">
+          <h4>Notificaciones en tiempo real</h4>
+          <p>Recibe actualizaciones por email o WhatsApp sobre el estado de cada incidencia. Sin necesidad de llamar.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📊</div>
+        <div class="feature-text">
+          <h4>Historial y métricas</h4>
+          <p>Consulta el historial completo de intervenciones, tiempos de resolución y estadísticas de tu farmacia.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📎</div>
+        <div class="feature-text">
+          <h4>Adjunta capturas y archivos</h4>
+          <p>Envía capturas de pantalla o logs directamente desde el portal para agilizar el diagnóstico.</p>
+        </div>
+      </div>
+      <a href="#" class="btn-primary" style="align-self:flex-start; margin-top:8px">Acceder al portal →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHATSAPP -->
+<section id="whatsapp">
+  <div class="wa-layout">
+    <div>
+      <div class="section-label">Siempre cerca</div>
+      <h2 class="section-title">Soporte por WhatsApp<br>cuando lo necesitas</h2>
+      <p class="section-sub" style="margin-bottom:28px">¿Tienes prisa? Escríbenos directamente por WhatsApp. Respondemos en minutos durante el horario de atención.</p>
+      <div class="features-list">
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-text">
+            <h4>Respuesta rápida</h4>
+            <p>En horario laboral, tiempo medio de primera respuesta inferior a 5 minutos.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📸</div>
+          <div class="feature-text">
+            <h4>Envíanos fotos o vídeos</h4>
+            <p>Muéstranos el problema con una foto del error. Muchas incidencias se resuelven sin ni siquiera conectar en remoto.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📅</div>
+          <div class="feature-text">
+            <h4>Solicita citas de mantenimiento</h4>
+            <p>Programa revisiones periódicas o intervenciones programadas directamente por chat.</p>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/34XXXXXXXXX?text=Hola%20ITFARMA%2C%20necesito%20soporte" 
+         class="btn-wa" target="_blank" style="margin-top:28px; display:inline-flex">
+        💬 Abrir WhatsApp
+      </a>
+    </div>
+    <div style="display:flex; justify-content:center">
+      <div class="wa-phone">
+        <div class="wa-bar">
+          <div class="wa-avatar">IT</div>
+          <div>
+            <div class="wa-name">ITFARMA Soporte</div>
+            <div class="wa-active">● En línea</div>
+          </div>
+        </div>
+        <div class="wa-messages">
+          <div class="msg msg-in">
+            Hola! La impresora de recetas no imprime desde esta mañana 😟
+            <div class="msg-time">09:14</div>
+          </div>
+          <div class="msg msg-out">
+            ¡Hola! Ahora te ayudamos. ¿Puedes enviarnos una foto del error que aparece en pantalla?
+            <div class="msg-time">09:15</div>
+          </div>
+          <div class="msg msg-in">
+            [📷 Foto adjunta]
+            <div class="msg-time">09:16</div>
+          </div>
+          <div class="msg msg-out">
+            Visto ✓ Es un error de driver. En 5 minutos lo tenemos. Te mandamos código de soporte remoto.
+            <div class="msg-time">09:16</div>
+          </div>
+          <div class="msg msg-in" style="background:rgba(37,211,102,0.1)">
+            ¡Perfecto! Muchas gracias 🙏
+            <div class="msg-time">09:17</div>
+          </div>
+        </div>
+        <div class="wa-input">💬 Escribe un mensaje...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+  <div class="nosotros-layout">
+    <div>
+      <div class="section-label">Quiénes somos</div>
+      <h2 class="section-title">Tu equipo IT<br>especializado en farmacia</h2>
+      <p class="section-sub">
+        ITFARMA nació con un objetivo claro: que las farmacias nunca se queden sin su herramienta más importante. Con sede en Madrid y más de 10 años de experiencia, somos el partner tecnológico de confianza para más de 200 oficinas de farmacia.
+      </p>
+      <p class="section-sub" style="margin-top:16px">
+        Conocemos Farmatic, Cashdro, los sistemas de verificación de medicamentos (SEVEM) y toda la infraestructura que hace funcionar una farmacia moderna.
+      </p>
+      <a href="#cta" class="btn-secondary" style="margin-top:28px; display:inline-flex">Conoce nuestro equipo →</a>
+    </div>
+    <div>
+      <div class="valores-grid">
+        <div class="valor-card">
+          <div class="valor-ico">⚡</div>
+          <div class="valor-title">Rapidez</div>
+          <div class="valor-desc">Primera respuesta en menos de 15 minutos en horario laboral.</div>
+        </div>
+        <div class="valor-card">
+          <div class="valor-ico">🎯</div>
+          <div class="valor-title">Especialización</div>
+          <div class="valor-desc">Solo farmacias. Conocemos tu software mejor que nadie.</div>
+        </div>
+        <div class="valor-card">
+          <div class="valor-ico">🤝</div>
+          <div class="valor-title">Cercanía</div>
+          <div class="valor-desc">Trato personal. Siempre sabes quién te atiende y cómo va tu caso.</div>
+        </div>
+        <div class="valor-card">
+          <div class="valor-ico">🔐</div>
+          <div class="valor-title">Seguridad</div>
+          <div class="valor-desc">Infraestructura propia, conexiones cifradas y máxima confidencialidad.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2 class="cta-title">¿Listo para mejorar<br>el soporte de tu farmacia?</h2>
+  <p class="cta-sub">Habla con nosotros hoy. Sin compromisos, sin letra pequeña.</p>
+  <div class="cta-actions">
+    <a href="https://wa.me/34XXXXXXXXX" class="btn-wa" target="_blank">💬 WhatsApp directo</a>
+    <a href="#soporte" class="btn-primary">⚡ Soporte remoto ya</a>
+    <a href="mailto:info@itfarma.net" class="btn-secondary">✉️ Enviar email</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contacto">
+  <div class="footer-top">
+    <div>
+      <a href="#" class="footer-logo">IT<span>FARMA</span></a>
+      <p class="footer-desc">Soluciones informáticas y tecnológicas especializadas para farmacias. Madrid y área metropolitana.</p>
+      <p class="footer-desc" style="margin-top:12px; font-size:0.78rem; color:rgba(143,163,184,0.5)">
+        IT Farma S.L. · Paseo de la Habana, 1 Planta 2B<br>28036 Madrid, España
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <a href="#soporte">Soporte Remoto</a>
+      <a href="#servicios">Farmatic</a>
+      <a href="#servicios">Ciberseguridad</a>
+      <a href="#servicios">Cashdro</a>
+      <a href="#servicios">Redes</a>
+    </div>
+    <div class="footer-col">
+      <h4>Cliente</h4>
+      <a href="#incidencias">Portal incidencias</a>
+      <a href="#soporte">Soporte remoto</a>
+      <a href="#whatsapp">WhatsApp soporte</a>
+      <a href="#">Documentación</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <a href="tel:+34XXXXXXXXX">📞 +34 XXX XXX XXX</a>
+      <a href="mailto:info@itfarma.net">✉️ info@itfarma.net</a>
+      <a href="https://wa.me/34XXXXXXXXX" target="_blank">💬 WhatsApp</a>
+      <a href="#">📍 Ver en mapa</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 ITFARMA · Todos los derechos reservados</span>
+    <span class="footer-cif">IT Farma S.L. · CIF B/866908 · Reg. Mercantil Madrid Tomo 30.934</span>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/34XXXXXXXXX?text=Hola%20ITFARMA%2C%20necesito%20soporte%20t%C3%A9cnico" 
+   class="wa-float" target="_blank" title="Soporte por WhatsApp">💬</a>
+<div class="wa-tooltip">Soporte por WhatsApp →</div>
+
+<script>
+  // Smooth scroll nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+    });
+  });
+
+  // Animate bars on scroll
+  const bars = document.querySelectorAll('.bar:not(.dim)');
+  const heights = [30, 55, 40, 75, 60, 90];
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if(en.isIntersecting){
+        bars.forEach((b,i) => { if(heights[i]) b.style.height = heights[i]+'%'; });
+      }
+    });
+  }, {threshold:0.5});
+  const chartEl = document.querySelector('.bars');
+  if(chartEl) obs.observe(chartEl);
+
+  // Entrada suave de elementos
+  const fadeEls = document.querySelectorAll('.servicio-card, .feature-item, .valor-card');
+  const fadeObs = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if(en.isIntersecting){
+        en.target.style.opacity = '1';
+        en.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, {threshold:0.1});
+  fadeEls.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    fadeObs.observe(el);
+  });
+</script>
+</body>
+</html>
