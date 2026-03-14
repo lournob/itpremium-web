@@ -1,0 +1,23 @@
+{
+  "routes": [
+    {
+      "route": "/clientes",
+      "redirect": "https://incidencias.itfarma.net:6443/portal.html",
+      "statusCode": 302
+    },
+    {
+      "route": "/clientes/*",
+      "redirect": "https://incidencias.itfarma.net:6443/portal.html",
+      "statusCode": 302
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/images/*.{png,jpg,gif,ico}", "/*.{css,scss,js}"]
+  },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "no-referrer"
+  }
+}
