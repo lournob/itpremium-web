@@ -857,12 +857,14 @@
         <div class="form-sub">Introduce el código que te ha facilitado tu técnico</div>
         <div class="input-group">
           <label>CÓDIGO DE SESIÓN</label>
-          <input type="text" id="isl-code-input" placeholder="Ej: 123-456-789" maxlength="15">
+          <input type="text" id="isl-code-input" placeholder="Ej: 65319946" maxlength="20"
+                 oninput="islResetStatus()" onkeydown="if(event.key==='Enter') conectarSoporte()">
         </div>
-        <button class="btn-conectar" onclick="conectarSoporte()">⚡ Conectar con soporte</button>
+        <button class="btn-conectar" id="btn-isl" onclick="conectarSoporte()">⚡ Conectar con soporte</button>
+        <div id="isl-status" style="margin-top:14px; padding:10px 14px; border-radius:8px; font-size:0.85rem; display:none; text-align:center;"></div>
         <div style="margin-top:16px; text-align:center">
           <p style="font-size:0.75rem; color:var(--slate); margin-bottom:10px">O accede directamente al portal de soporte:</p>
-          <a href="https://soporte.itfarma.net" target="_blank" class="btn-portal" style="display:inline-flex">
+          <a href="https://soporte.itfarma.net/users/main/join.html" target="_blank" class="btn-portal" style="display:inline-flex">
             🔗 Abrir portal de soporte →
           </a>
         </div>
@@ -1120,52 +1122,85 @@
    class="wa-float" target="_blank" title="Soporte por WhatsApp">💬</a>
 <div class="wa-tooltip">Soporte por WhatsApp →</div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Soporte ISL - Opción C: formulario propio que abre ISL en nueva pestaña
-  function conectarSoporte() {
-    var codigo = document.getElementById('isl-code-input').value.replace(/\s|-/g, '').trim();
-    if (!codigo) {
-      alert('Por favor, introduce el código de sesión que te ha proporcionado tu técnico.');
-      return;
-    }
-    window.open('https://soporte.itfarma.net/join/' + codigo, '_blank');
+<script>
+  // ── Soporte ISL — mismo método que la web actual de itfarma.net ──────────────
+  var ISL_BASE = 'https://soporte.itfarma.net/start/ISLLightClient'
+               + '?no_instructions=1'
+               + '&cmdline=--on-load+%22main%3Fpos%3Drighttop%22'
+               + '+--on-connect+%22desktop%3Fshow%26control%26admin%3Drestart%22'
+               + '--on-load+%22main%3Ficonize%22'
+               + '--silent+--auto-close+--connect+';
+
+  function islStatus(msg, type) {
+    var el = document.getElementById('isl-status');
+    if (!el) return;
+    el.style.display = 'block';
+    var colors = {
+      ok:    { bg:'#0a2a1a', border:'#00c48c', color:'#6ee7b7' },
+      error: { bg:'#3b0f0f', border:'#dc2626', color:'#fca5a5' }
+    };
+    var c = colors[type] || colors.ok;
+    el.style.background = c.bg;
+    el.style.border = '1px solid ' + c.border;
+    el.style.color = c.color;
+    el.innerHTML = msg;
   }
 
-  // Permitir conectar también pulsando Enter en el input
-  document.addEventListener('DOMContentLoaded', function() {
-    var input = document.getElementById('isl-code-input');
-    if (input) {
-      input.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') conectarSoporte();
-      });
-    }
-  });
+  function islResetStatus() {
+    var el = document.getElementById('isl-status');
+    if (el) el.style.display = 'none';
+  }
 
-  // Smooth scroll nav
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const t = document.querySelector(a.getAttribute('href'));
-      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+  function conectarSoporte() {
+    var input = document.getElementById('isl-code-input');
+    if (!input) return;
+
+    var codigo = input.value.replace(/[\s\-]/g, '').trim();
+    if (!codigo) {
+      islStatus('⚠️ Por favor, introduce el código de sesión que te ha proporcionado tu técnico.', 'error');
+      return;
+    }
+
+    islStatus('✅ Abriendo cliente de soporte... Si no se descarga nada, comprueba que no está bloqueado por el navegador.', 'ok');
+    window.open(ISL_BASE + encodeURIComponent(codigo));
+  }
+
+  // ── Smooth scroll nav ───────────────────────────────────────────────────────
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
     });
   });
 
-  // Animate bars on scroll
-  const bars = document.querySelectorAll('.bar:not(.dim)');
-  const heights = [30, 55, 40, 75, 60, 90];
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if(en.isIntersecting){
-        bars.forEach((b,i) => { if(heights[i]) b.style.height = heights[i]+'%'; });
+  // ── Animate bars on scroll ──────────────────────────────────────────────────
+  var bars = document.querySelectorAll('.bar:not(.dim)');
+  var heights = [30, 55, 40, 75, 60, 90];
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(en) {
+      if (en.isIntersecting) {
+        bars.forEach(function(b, i) { if (heights[i]) b.style.height = heights[i] + '%'; });
       }
     });
-  }, {threshold:0.5});
-  const chartEl = document.querySelector('.bars');
-  if(chartEl) obs.observe(chartEl);
+  }, {threshold: 0.5});
+  var chartEl = document.querySelector('.bars');
+  if (chartEl) obs.observe(chartEl);
 
-  // Entrada suave de elementos
-  const fadeEls = document.querySelectorAll('.servicio-card, .feature-item, .valor-card');
-  const fadeObs = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if(en.isIntersecting){
+  // ── Fade in elements on scroll ──────────────────────────────────────────────
+  var fadeEls = document.querySelectorAll('.servicio-card, .feature-item, .valor-card');
+  var fadeObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(en) {
+      if (en.isIntersecting) {
         en.target.style.opacity = '1';
+        en.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, {threshold: 0.1});
+  fadeEls.forEach(function(el) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    fadeObs.observe(el);
+  });
+</script>
  
