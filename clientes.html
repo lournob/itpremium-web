@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Área de Clientes · ITFARMA</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%; background: #F5F0E8;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card {
+    text-align: center; max-width: 420px; padding: 20px;
+  }
+  /* Logo placeholder - mismo PNG que la web */
+  .logo-wrap { margin-bottom: 32px; }
+  .logo-wrap img { width: 140px; height: auto; }
+
+  .spinner-wrap { margin-bottom: 28px; }
+  .spinner {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 3px solid #EAF4D6;
+    border-top-color: #6FAD2A;
+    animation: spin 0.9s linear infinite;
+    margin: 0 auto;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  h2 {
+    font-size: 1.2rem; font-weight: 700;
+    color: #3C3C3B; margin-bottom: 8px;
+    font-family: Georgia, serif;
+  }
+  p { font-size: 0.85rem; color: #5C5850; line-height: 1.6; margin-bottom: 24px; }
+
+  .progress-bar {
+    width: 100%; height: 3px;
+    background: #EAF4D6; border-radius: 2px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: #6FAD2A; border-radius: 2px;
+    width: 0%; transition: width 1.4s ease;
+  }
+  .back {
+    display: inline-block; margin-top: 20px;
+    font-size: 0.75rem; color: #5C5850;
+    text-decoration: none;
+    padding: 6px 14px; border-radius: 4px;
+    border: 1px solid rgba(20,18,16,0.12);
+    transition: background 0.2s;
+  }
+  .back:hover { background: rgba(20,18,16,0.05); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="spinner-wrap">
+    <div class="spinner"></div>
+  </div>
+  <h2>Accediendo al portal de clientes</h2>
+  <p>En un momento serás redirigido al portal de incidencias de ITFARMA.</p>
+  <div class="progress-bar">
+    <div class="progress-fill" id="bar"></div>
+  </div>
+  <a href="/" class="back">← Volver a la web</a>
+</div>
+
+<script>
+  // Animar la barra de progreso
+  setTimeout(function() {
+    document.getElementById('bar').style.width = '100%';
+  }, 50);
+
+  // Redirigir después de 1.5s — la URL de destino NO aparece en la pantalla
+  setTimeout(function() {
+    window.location.replace('https://incidencias.itfarma.net:6443/portal.html');
+  }, 1500);
+</script>
+</body>
+</html>

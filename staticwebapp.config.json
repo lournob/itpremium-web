@@ -2,22 +2,19 @@
   "routes": [
     {
       "route": "/clientes",
-      "redirect": "https://incidencias.itfarma.net:6443/portal.html",
-      "statusCode": 302
+      "rewrite": "/clientes.html"
     },
     {
-      "route": "/clientes/*",
-      "redirect": "https://incidencias.itfarma.net:6443/portal.html",
-      "statusCode": 302
+      "route": "/clientes/",
+      "rewrite": "/clientes.html"
     }
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif,ico}", "/*.{css,scss,js}"]
+    "exclude": ["/clientes.html", "/images/*.{png,jpg,gif,ico}", "/*.{css,scss,js}"]
   },
   "globalHeaders": {
     "X-Content-Type-Options": "nosniff",
-    "X-Frame-Options": "SAMEORIGIN",
     "Referrer-Policy": "no-referrer"
   }
 }
